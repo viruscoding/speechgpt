@@ -2,15 +2,15 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "dev" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "dev" ]
 
 env:
-  IMAGE_NAME: speechgpt
+  IMAGE_NAME: speechgpt-amd64
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  
+
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
