@@ -129,3 +129,22 @@ export const allConversationClearNotify = () => {
     style: notificationStyle,
   });
 };
+
+export const invalidSettings = () => {
+  toast.error(i18next.t('notification.invalid-settings') as string, {
+    style: notificationStyle,
+  });
+};
+
+export const OpenAiErrorMessageNotify = (msg: any) => {
+  toast.error(msg as string, {
+    style: notificationStyle,
+  });
+};
+
+export const OpenAiContentFilterNotify = () => {
+  toast.error(i18next.t('notification.content-filter') as string, {
+    style: notificationStyle,
+  });
+};
+

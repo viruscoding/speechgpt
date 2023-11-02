@@ -26,7 +26,6 @@ function LanguageSelector() {
 
   const languages: LanguageOption[] = [
     { code: 'en', name: 'English' },
-    { code: 'es', name: 'Español' },
     { code: 'zh', name: '中文' },
   ];
 

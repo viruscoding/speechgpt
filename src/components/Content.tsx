@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
-import sendRequest from '../apis/openai';
+import {sendRequest,azureOpenAICompletions} from '../apis/openai';
 import Header from './Header';
 import ConversationPanel from './ConversationPanel';
 import ButtonGroup from './ButtonGroup';
@@ -222,6 +222,12 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
       conversationsToSent = conversationsToSent.slice(chat.maxMessages * -1);
       conversationsToSent.unshift({ role: 'system', content: chat.systemRole });
       console.log(conversationsToSent);
+      const azureOpenAIApiKey = existEnvironmentVariable('AZURE_OPENAI_API_KEY')
+        ? getEnvironmentVariable('AZURE_OPENAI_API_KEY')
+        : key.azureOpenAIApiKey;
+      const azureOpenAIEndpoint = existEnvironmentVariable('AZURE_OPENAI_ENDPOINT')
+        ? getEnvironmentVariable('AZURE_OPENAI_ENDPOINT')
+        : key.azureOpenAIEndpoint;
       const openaiApiKey = existEnvironmentVariable('OPENAI_API_KEY')
         ? getEnvironmentVariable('OPENAI_API_KEY')
         : key.openaiApiKey;
@@ -241,36 +247,83 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
         }
       }
 
-      sendRequest(
-        conversationsToSent as any,
-        openaiApiKey,
-        openaiApiHost,
-        openaiApiModel,
-        (data: any) => {
-          setStatus('idle');
-          if (data) {
-            if ('error' in data) {
-              console.log(data.error.code);
-              if (data.error.code === 'invalid_api_key') {
-                notify.invalidOpenAiKeyNotify();
-              } else if (data.error.code === 'model_not_found') {
-                notify.invalidOpenAiModelNotify();
-              } else if (data.error.type === 'invalid_request_error') {
-                notify.invalidOpenAiRequestNotify();
-              } else {
-                notify.openAiErrorNotify();
+      switch (chat.service) {
+        case 'Azure OpenAI':
+          if (azureOpenAIApiKey === '' || azureOpenAIEndpoint === '') {
+            notify.invalidSettings();
+            setStatus('idle');
+            return;
+          }
+          azureOpenAICompletions(
+            azureOpenAIEndpoint,
+            azureOpenAIApiKey,
+            conversationsToSent as any,
+            chat.maxTokens,
+            chat.temperature,
+            (data:any) => {
+              setStatus('idle');
+              if (data) {
+                if ('error' in data) {
+                  console.log(data.error.code);
+                  if (data.error.code === 'content_filter') {
+                    notify.openAiContentFilterNotify();
+                  } else {
+                    notify.openAiErrorMessageNotify(data.error.message);
+                  }
+                }
+                setResponse(data.choices[0].message.content);
+                console.log('Response: ' + data.choices[0].message.content);
+                setStatus('idle');
               }
             }
-            setResponse(data.choices[0].message.content);
-            console.log('Response: ' + data.choices[0].message.content);
+          ).catch(err => {
+            console.log(err);
+            notify.networkErrorNotify();
             setStatus('idle');
+          });
+          break;
+        case 'OpenAI':
+          if (openaiApiKey === '' || openaiApiHost === '' || openaiApiModel === '') {
+            notify.invalidSettings();
+            setStatus('idle');
+            return;
           }
-        }
-      ).catch(err => {
-        console.log(err);
-        notify.networkErrorNotify();
-        setStatus('idle');
-      });
+          sendRequest(
+            conversationsToSent as any,
+            openaiApiKey,
+            openaiApiHost,
+            openaiApiModel,
+            (data: any) => {
+              setStatus('idle');
+              if (data) {
+                if ('error' in data) {
+                  console.log(data.error.code);
+                  if (data.error.code === 'invalid_api_key') {
+                    notify.invalidOpenAiKeyNotify();
+                  } else if (data.error.code === 'model_not_found') {
+                    notify.invalidOpenAiModelNotify();
+                  } else if (data.error.type === 'invalid_request_error') {
+                    notify.invalidOpenAiRequestNotify();
+                  } else {
+                    notify.openAiErrorNotify();
+                  }
+                }
+                setResponse(data.choices[0].message.content);
+                console.log('Response: ' + data.choices[0].message.content);
+                setStatus('idle');
+              }
+            }
+          ).catch(err => {
+            console.log(err);
+            notify.networkErrorNotify();
+            setStatus('idle');
+          });
+          break;
+        default:
+          notify.invalidSettings();
+          setStatus('idle');
+          return;
+      }
     }
   }, [conversations]);
 

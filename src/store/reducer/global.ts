@@ -23,6 +23,7 @@ export const globalSlice = createSlice({
       systemRole: 'From now on, the number of words in your reply cannot exceed 50 words.',
       defaultPrompt: '',
       useAssistant: true,
+      maxTokens: 800,
       temperature: 0.8,
       maxMessages: 20,
     },

@@ -61,16 +61,21 @@
   "setting": {
     "chat": {
       "title": "对话",
+      "service": "服务",
+      "chat-service": "OpenAI 服务",
+      "chat-service-tooltip": "哪种类型的OpenAI",
       "access-code": "访问密码",
       "access-code-tooltip": "输入访问密码以使用应用",
       "code": "Code",
       "api-key": "API Key",
       "default-host-address": "chat.openai.com",
-      "openai": "OpenAI",
       "openai-api-key": "OpenAI API 密钥",
       "openai-host": "OpenAI API 地址",
       "openai-host-tooltip": "用于连接 OpenAI API 的地址",
       "openai-model": "OpenAI 模型",
+      "azure-openai-api-key": "Azure OpenAI API 密钥",
+      "azure-openai-endpoint": "Azure OpenAI 端点 地址",
+      "azure-openai-endpoint-tooltip": "格式：https://your-endpoint-base.openai.azure.com/openai/deployments/your-azure-model-name/completions?api-version=2022-12-01",
       "default-value": "默认值",
       "system-role": "系统角色",
       "system-role-tooltip": "系统在对话中的角色",
@@ -80,10 +85,12 @@
       "others": "其他",
       "use-assistant": "使用助手的回复",
       "use-assistant-tooltip": "这将提高回复的准确性，但会使用更多的 Token",
+      "max-tokens": "最大令牌数",
+      "max-tokens-tooltip": "数值越大，允许发送/回复的内容越多",
       "temperature": "思维发散程度",
       "temperature-tooltip": "思维发散程度越高，回复越多样化，但可能不太相关",
       "maximum-messages": "连续对话次数",
-      "maximum-messages-tooltip": "这将提高回复的准确性，但会使用更多的 Token",
+      "maximum-messages-tooltip": "携带前几次的对话记录，这将提高回复的准确性，但会使用更多的令牌",
       "already-set-environment-variable": "已在环境变量中设置 OpenAI API 密钥"
     },
     "synthesis": {
@@ -167,6 +174,8 @@
     "invalid-azure-key": "无效的 Azure Key 或 Region",
     "cannot-be-empty": "不能为空",
     "invalid-access-code": "无效的访问密码",
-    "all-conversations-clear": "已清除所有对话"
+    "all-conversations-clear": "已清除所有对话",
+    "invalid-settings": "设置无效",
+    "content-filter": "触发敏感内容管理策略，请修改输入并重试"
   }
 }

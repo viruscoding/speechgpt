@@ -61,16 +61,21 @@
   "setting": {
     "chat": {
       "title": "Chat",
+      "service": "Service",
+      "chat-service": "OpenAI Service",
+      "chat-service-tooltip": "Which service to use for OpenAI",
       "access-code": "Access Code",
       "access-code-tooltip": "Enter the access code to use the application",
       "code": "Code",
       "api-key": "API Key",
       "default-host-address": "chat.openai.com",
-      "openai": "OpenAI",
       "openai-api-key": "OpenAI API Key",
       "openai-host": "OpenAI Host",
       "openai-host-tooltip": "Host address for connecting to the OpenAI API",
       "openai-model": "OpenAI Model",
+      "azure-openai-api-key": "Azure OpenAI API Key",
+      "azure-openai-endpoint": "Azure OpenAI endpoint url",
+      "azure-openai-endpoint-tooltip": "i.e: https://your-endpoint-base.openai.azure.com/openai/deployments/your-azure-model-name/completions?api-version=2022-12-01",
       "default-value": "Default Value",
       "system-role": "System Role",
       "system-role-tooltip": "The role of the system in the chat",
@@ -80,6 +85,8 @@
       "others": "Others",
       "use-assistant": "Use Assistant's Response",
       "use-assistant-tooltip": "This will improve the accuracy of replies, but will use more Tokens",
+      "max-tokens": "Max Tokens",
+      "max-tokens-tooltip": "The higher the number, the more send/response length",
       "temperature": "Temperature",
       "temperature-tooltip": "The higher the temperature, the more diverse the response, but it may be less relevant",
       "maximum-messages": "Maximum Messages Used",
@@ -167,6 +174,8 @@
     "invalid-azure-key": "Invalid Azure key or region",
     "cannot-be-empty": "This field cannot be empty",
     "invalid-access-code": "Invalid access code",
-    "all-conversations-clear": "All conversations have been cleared"
+    "all-conversations-clear": "All conversations have been cleared",
+    "invalid-settings": "Invalid settings",
+    "content-filter": "Sensitive content policy is triggered, please modify the input and try again"
   }
 }

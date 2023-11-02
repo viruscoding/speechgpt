@@ -2,7 +2,6 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 import enLocale from './locales/en.json';
-import esLocale from './locales/es.json';
 import zhLocale from './locales/zh-CN.json';
 
 function getLocaleFromLocalStorage() {
@@ -23,9 +22,6 @@ i18n.use(initReactI18next).init({
     },
     zh: {
       translation: zhLocale,
-    },
-    es: {
-      translation: esLocale,
     },
   },
   fallbackLng: getLocaleFromLocalStorage() || 'en',

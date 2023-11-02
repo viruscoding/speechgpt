@@ -45,6 +45,9 @@ function Home() {
     cannotBeEmptyNotify: Notify.cannotBeEmptyNotify,
     invalidAccessCodeNotify: Notify.invalidAccessCodeNotify,
     allConversationClearNotify: Notify.allConversationClearNotify,
+    invalidSettings: Notify.invalidSettings,
+    openAiErrorMessageNotify: Notify.OpenAiErrorMessageNotify,
+    openAiContentFilterNotify: Notify.OpenAiContentFilterNotify,
   };
 
   const toggleSidebar = () => {

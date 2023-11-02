@@ -30,6 +30,7 @@ export interface Session {
     systemRole: string;
     defaultPrompt: string;
     useAssistant: boolean;
+    maxTokens: number,
     temperature: number;
     maxMessages: number;
   };

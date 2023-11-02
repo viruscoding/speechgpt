@@ -30,45 +30,88 @@ const ChatSection: React.FC<ChatSectionProps> = ({}) => {
 
   const { i18n } = useTranslation();
 
+  const chatServices = ['Azure OpenAI', 'OpenAI'];
+
   return (
     <div className="pb-5 flex flex-col space-y-2 overflow-y-scroll sm:py-6 sm:max-h-96 w-full max-h-[32rem]">
-      <SettingTitle text={i18n.t('setting.chat.openai') as string} />
+      <SettingTitle text={i18n.t('setting.chat.service') as string} />
       <SettingGroup>
-        {existEnvironmentVariable('OPENAI_API_KEY') ? (
-          <SettingCheckText
-            text={i18n.t('setting.chat.already-set-environment-variable') as string}
-          />
-        ) : (
-          <>
-            <SettingInput
-              text={i18n.t('setting.chat.openai-api-key') as string}
-              id={'openai-api'}
-              type={'text'}
-              value={key.openaiApiKey}
-              onChange={e => setKey({ ...key, openaiApiKey: e })}
-              placeholder={i18n.t('setting.chat.api-key') as string}
-              className={''}
+        <SettingSelect
+          text={i18n.t('setting.chat.chat-service') as string}
+          helpText={i18n.t('setting.chat.chat-service-tooltip') as string}
+          options={chatServices}
+          value={chat.service}
+          className="min-w-min pr-8"
+          selectClassName={'flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0'}
+          onChange={e => setChat({ ...chat, service: e })}
+        />
+
+        {chat.service === 'Azure OpenAI' &&
+          (existEnvironmentVariable('AZURE_OPENAI_API_KEY') &&
+          existEnvironmentVariable('AZURE_OPENAI_ENDPOINT') ? (
+            <SettingCheckText
+              text={i18n.t('setting.chat.already-set-environment-variable') as string}
             />
-            <SettingInput
-              text={i18n.t('setting.chat.openai-host') as string}
-              helpText={i18n.t('setting.chat.openai-host-tooltip') as string}
-              id={'openai-host'}
-              type={'text'}
-              value={key.openaiHost}
-              onChange={e => setKey({ ...key, openaiHost: e })}
-              placeholder={i18n.t('setting.chat.default-host-address') as string}
-              className={''}
+          ) : (
+            <>
+              <SettingInput
+                text={i18n.t('setting.chat.azure-openai-api-key') as string}
+                id={'azure-openai-api'}
+                type={'text'}
+                value={key.azureOpenAIApiKey}
+                onChange={e => setKey({ ...key, azureOpenAIApiKey: e })}
+                placeholder={i18n.t('setting.chat.api-key') as string}
+                className={''}
+              />
+              <SettingInput
+                text={i18n.t('setting.chat.azure-openai-endpoint') as string}
+                helpText={i18n.t('setting.chat.azure-openai-endpoint-tooltip') as string}
+                id={'azure-openai-host'}
+                type={'text'}
+                value={key.azureOpenAIEndpoint}
+                onChange={e => setKey({ ...key, azureOpenAIEndpoint: e })}
+                placeholder={i18n.t('setting.chat.azure-openai-endpoint') as string}
+                className={''}
+              />
+            </>
+          ))}
+
+        {chat.service === 'OpenAI' &&
+          (existEnvironmentVariable('OPENAI_API_KEY') ? (
+            <SettingCheckText
+              text={i18n.t('setting.chat.already-set-environment-variable') as string}
             />
-            <SettingSelect
-              text={i18n.t('setting.chat.openai-model') as string}
-              options={openaiModels}
-              value={key.openaiModel}
-              className={'min-w-min pr-8'}
-              selectClassName={'flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0'}
-              onChange={e => setKey({ ...key, openaiModel: e })}
-            />
-          </>
-        )}
+          ) : (
+            <>
+              <SettingInput
+                text={i18n.t('setting.chat.openai-api-key') as string}
+                id={'openai-api'}
+                type={'text'}
+                value={key.openaiApiKey}
+                onChange={e => setKey({ ...key, openaiApiKey: e })}
+                placeholder={i18n.t('setting.chat.api-key') as string}
+                className={''}
+              />
+              <SettingInput
+                text={i18n.t('setting.chat.openai-host') as string}
+                helpText={i18n.t('setting.chat.openai-host-tooltip') as string}
+                id={'openai-host'}
+                type={'text'}
+                value={key.openaiHost}
+                onChange={e => setKey({ ...key, openaiHost: e })}
+                placeholder={i18n.t('setting.chat.default-host-address') as string}
+                className={''}
+              />
+              <SettingSelect
+                text={i18n.t('setting.chat.openai-model') as string}
+                options={openaiModels}
+                value={key.openaiModel}
+                className={'min-w-min pr-8'}
+                selectClassName={'flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0'}
+                onChange={e => setKey({ ...key, openaiModel: e })}
+              />
+            </>
+          ))}
         {existEnvironmentVariable('ACCESS_CODE') ? (
           <SettingInput
             text={i18n.t('setting.chat.access-code') as string}
@@ -117,13 +160,23 @@ const ChatSection: React.FC<ChatSectionProps> = ({}) => {
           onChange={e => setChat({ ...chat, useAssistant: e })}
         />
         <SettingSlider
+          text={i18n.t('setting.chat.max-tokens') as string}
+          helpText={i18n.t('setting.chat.max-tokens-tooltip') as string}
+          id={'maxTokens'}
+          value={chat.maxTokens}
+          onChange={e => setChat({ ...chat, maxTokens: e })}
+          min={'1'}
+          max={'4000'}
+          step={'1'}
+        />
+        <SettingSlider
           text={i18n.t('setting.chat.temperature') as string}
           helpText={i18n.t('setting.chat.temperature-tooltip') as string}
           id={'temperature'}
           value={chat.temperature}
           onChange={e => setChat({ ...chat, temperature: e })}
           min={'0'}
-          max={'2'}
+          max={'0.9'}
           step={'0.1'}
         />
         <SettingSlider
