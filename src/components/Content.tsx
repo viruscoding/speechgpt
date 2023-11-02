@@ -283,7 +283,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
           });
           break;
         case 'OpenAI':
-          if (openaiApiKey === '' || openaiApiHost === '' || openaiApiModel === '') {
+          if (openaiApiKey === '') {
             notify.invalidSettings();
             setStatus('idle');
             return;
