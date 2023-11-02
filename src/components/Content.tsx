@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
-import {sendRequest,azureOpenAICompletions} from '../apis/openai';
+import { sendRequest, azureOpenAICompletions } from '../apis/openai';
 import Header from './Header';
 import ConversationPanel from './ConversationPanel';
 import ButtonGroup from './ButtonGroup';
@@ -210,10 +210,14 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
   useEffect(() => {
     if (conversations.length > 0 && sendMessages) {
       setStatus('waiting');
-      let conversationsToSent: any = conversations;
+      let conversationsToSent: any = conversations.filter(
+        conversation => conversation.sessionId === currentSessionId
+      );
       if (!chat.useAssistant) {
         conversationsToSent = conversations.filter(
-          conversation => conversation.role === 'user' || conversation.role === 'system'
+          conversation =>
+            (conversation.role === 'user' || conversation.role === 'system') &&
+            conversation.sessionId === currentSessionId
         );
       }
       conversationsToSent = conversationsToSent.map((conversation: any) => {
@@ -260,7 +264,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
             conversationsToSent as any,
             chat.maxTokens,
             chat.temperature,
-            (data:any) => {
+            (data: any) => {
               setStatus('idle');
               if (data) {
                 if ('error' in data) {
@@ -270,9 +274,10 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
                   } else {
                     notify.openAiErrorMessageNotify(data.error.message);
                   }
+                } else {
+                  setResponse(data.choices[0].message.content);
+                  console.log('Response: ' + data.choices[0].message.content);
                 }
-                setResponse(data.choices[0].message.content);
-                console.log('Response: ' + data.choices[0].message.content);
                 setStatus('idle');
               }
             }
@@ -305,11 +310,12 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
                   } else if (data.error.type === 'invalid_request_error') {
                     notify.invalidOpenAiRequestNotify();
                   } else {
-                    notify.openAiErrorNotify();
+                    notify.openAiErrorMessageNotify(data.error.message);
                   }
+                } else {
+                  setResponse(data.choices[0].message.content);
+                  console.log('Response: ' + data.choices[0].message.content);
                 }
-                setResponse(data.choices[0].message.content);
-                console.log('Response: ' + data.choices[0].message.content);
                 setStatus('idle');
               }
             }
