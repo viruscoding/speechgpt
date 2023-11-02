@@ -512,7 +512,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
   }, [isListening]);
 
   return (
-    <div className="max-w-180 w-full flex flex-col h-full justify-between pb-3 dark:bg-gray-900">
+    <div className="w-full flex flex-col h-full justify-between pb-3 dark:bg-gray-900" style={{ width: '85%'}}>
       {voice.service == 'System' && (
         <BrowserSpeechToText
           isListening={isListening}
