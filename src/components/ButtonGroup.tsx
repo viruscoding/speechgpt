@@ -12,7 +12,7 @@ import {
   IconPlayerPause,
   IconPlayerPlay,
   IconBackspace,
-  IconCheck,
+  IconCheck, IconTrash
 } from '@tabler/icons-react';
 import { useGlobalStore } from '../store/module';
 import { isMobile } from 'react-device-detect';
@@ -150,7 +150,7 @@ function ButtonGroup({
           <TippyButton
             tooltip={i18n.t('common.reset-conversation') as string}
             onClick={handleResetClick}
-            icon={<IconRotateClockwise className="w-6 h-6 text-slate-500" />}
+            icon={<IconTrash className="w-6 h-6 text-slate-500" />}
             style="hover:bg-slate-200 active:bg-slate-300"
           />
         )}
