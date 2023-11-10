@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import SettingSelect from './base/SettingSelect';
 
-import { azureSpeechSynthesisVoices } from '../../constants/data';
+import { azureSpeechSynthesisVoices, azureSpeechSynthesisVoiceStyles } from '../../constants/data';
 import { useGlobalStore } from '../../store/module';
 import { useTranslation } from 'react-i18next';
 
@@ -22,15 +22,30 @@ const azureTtsVoice = () => {
   }, [languageCode]);
 
   return (
-    <SettingSelect
-      text={i18n.t('setting.synthesis.voice-id') as string}
-      helpText={i18n.t('setting.synthesis.voice-id-tooltip') as string}
-      options={azureSpeechSynthesisVoices[languageCode]}
-      value={speech.azureVoice}
-      className="min-w-min"
-      selectClassName={'flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0'}
-      onChange={e => setSpeech({ ...speech, azureVoice: e })}
-    />
+    <>
+      <SettingSelect
+        text={i18n.t('setting.synthesis.voice-id') as string}
+        helpText={i18n.t('setting.synthesis.voice-id-tooltip') as string}
+        options={azureSpeechSynthesisVoices[languageCode]}
+        value={speech.azureVoice}
+        className="min-w-min"
+        selectClassName={'flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0'}
+        onChange={e => setSpeech({ ...speech, azureVoice: e })}
+      />
+
+      {azureSpeechSynthesisVoiceStyles[speech.azureVoice] &&
+        azureSpeechSynthesisVoiceStyles[speech.azureVoice].length > 0 && (
+          <SettingSelect
+            text={i18n.t('setting.synthesis.voice-style') as string}
+            helpText={i18n.t('setting.synthesis.voice-style-tooltip') as string}
+            options={azureSpeechSynthesisVoiceStyles[speech.azureVoice]}
+            value={speech.azureVoiceStyle}
+            className="min-w-min"
+            selectClassName={'flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0'}
+            onChange={e => setSpeech({ ...speech, azureVoiceStyle: e })}
+          />
+        )}
+    </>
   );
 };
 

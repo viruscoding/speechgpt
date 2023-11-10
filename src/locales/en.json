@@ -115,6 +115,8 @@
       "engine-tooltip": "Neural engine is more expensive but more natural sounding",
       "voice-id": "Voice ID",
       "voice-id-tooltip": "The voice used to synthesize speech",
+      "voice-style": "Voice Style",
+      "voice-style-tooltip": "The style of the voice used to synthesize speech",
       "polly-standard-not-supported": "The selected language is not supported by Amazon Polly Standard TTS",
       "polly-neural-not-supported": "The selected language is not supported by Amazon Polly Neural TTS",
       "mobile-not-supported": "Currently, mobile devices are not supported for builtin speech synthesis",

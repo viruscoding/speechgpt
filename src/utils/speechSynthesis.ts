@@ -10,6 +10,7 @@ interface SpeechSynthesisOptions {
   rate?: number;
   pitch?: number;
   voiceName: string;
+  voiceStyle: string;
   engine?: string;
   region?: string;
   accessKeyId?: string;
@@ -63,6 +64,7 @@ export function speechSynthesis({
   rate,
   pitch,
   voiceName,
+  voiceStyle,
   engine,
   region,
   accessKeyId,
@@ -155,6 +157,7 @@ export function speechSynthesis({
           region || 'eastus',
           text,
           voiceName,
+          voiceStyle,
           language
         )
           .then(player => {

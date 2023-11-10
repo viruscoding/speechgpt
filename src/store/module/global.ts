@@ -57,6 +57,7 @@ const defaultGlobalState = {
     pollyEngine: 'Standard',
     azureLanguage: 'en-US',
     azureVoice: '',
+    azureVoiceStyle: 'Default',
   },
   voice: {
     service: 'System',

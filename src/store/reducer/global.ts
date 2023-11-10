@@ -38,6 +38,7 @@ export const globalSlice = createSlice({
       pollyEngine: 'Standard',
       azureLanguage: 'en-US',
       azureVoice: '',
+      azureVoiceStyle: 'Default',
     },
     voice: {
       service: 'System',

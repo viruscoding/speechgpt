@@ -39,6 +39,7 @@ export const initialState: SessionState = {
         pollyEngine: 'Standard',
         azureLanguage: 'en-US',
         azureVoice: '',
+        azureVoiceStyle: 'Default',
       },
       voice: {
         service: 'System',
@@ -94,6 +95,7 @@ export const sessionSlice = createSlice({
           pollyEngine: 'Standard',
           azureLanguage: 'en-US',
           azureVoice: '',
+          azureVoiceStyle: '',
         },
         voice: {
           service: 'System',

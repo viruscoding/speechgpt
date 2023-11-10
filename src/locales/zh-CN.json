@@ -115,6 +115,8 @@
       "engine-tooltip": "Neural 引擎价格更高但更加逼真",
       "voice-id": "语音 ID",
       "voice-id-tooltip": "用于指定特定的语音",
+      "voice-style": "说话风格",
+      "voice-style-tooltip": "用于指定特定的说话风格",
       "polly-standard-not-supported": "Polly 标准版不支持此语言",
       "polly-neural-not-supported": "Polly 神经版不支持此语言",
       "mobile-not-supported": "目前，移动端不支持浏览器语音合成",

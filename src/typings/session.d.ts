@@ -30,7 +30,7 @@ export interface Session {
     systemRole: string;
     defaultPrompt: string;
     useAssistant: boolean;
-    maxTokens: number,
+    maxTokens: number;
     temperature: number;
     maxMessages: number;
   };
@@ -45,6 +45,7 @@ export interface Session {
     pollyEngine: string;
     azureLanguage: string;
     azureVoice: string;
+    azureVoiceStyle: string;
   };
   voice: {
     service: string;

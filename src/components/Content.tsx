@@ -127,6 +127,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
 
     let language: string = '';
     let voiceName: string = '';
+    let voiceStyle: string = '';
     let rate: number = 1;
     let pitch: number = 1;
     let region: string = '';
@@ -156,6 +157,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
       case 'Azure TTS':
         language = speech.azureLanguage;
         voiceName = speech.azureVoice;
+        voiceStyle = speech.azureVoiceStyle;
         region = existEnvironmentVariable('AZURE_REGION')
           ? getEnvironmentVariable('AZURE_REGION')
           : key.azureRegion;
@@ -172,6 +174,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
       rate: rate,
       pitch: pitch,
       voiceName: voiceName,
+      voiceStyle: voiceStyle,
       engine: speech.pollyEngine,
       region: region,
       accessKeyId: accessKeyId,
@@ -512,7 +515,10 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
   }, [isListening]);
 
   return (
-    <div className="w-full flex flex-col h-full justify-between pb-3 dark:bg-gray-900" style={{ width: '85%'}}>
+    <div
+      className="w-full flex flex-col h-full justify-between pb-3 dark:bg-gray-900"
+      style={{ width: '85%' }}
+    >
       {voice.service == 'System' && (
         <BrowserSpeechToText
           isListening={isListening}
